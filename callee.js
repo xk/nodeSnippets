@@ -1,3 +1,7 @@
+#!/usr/local/bin/node
+//jorge@jorgechamorro.com
+//Compara la velocidad de recuersión usando arguments.callee vs usando una función con nombre.
+
 var sys= require("sys");
 
 var k1= 2e3;
