@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 //20100330 jorge@jorgechamorro.com
 //gzipStr(str) returns str gzipped to cb(str)
 

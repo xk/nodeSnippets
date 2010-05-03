@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 //20100401 jorge@jorgechamorro.com
 //still attempting to gzip afap
 

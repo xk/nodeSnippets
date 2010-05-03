@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+//201003xx jorge@jorgechamorro.com
+
 var sys= require("sys");
 var nxtCtr = 0;
 var stoCtr= 0;

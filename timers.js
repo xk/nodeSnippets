@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+//201003xx jorge@jorgechamorro.com
+
 var sys= require("sys");
 
 sys.puts("PID: "+ process.pid+ " (timers.js): IN");

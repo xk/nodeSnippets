@@ -1,6 +1,4 @@
-#!/usr/local/bin/node -v
-//#!/usr/bin/env node
-
+#!/usr/bin/env node
 //20100412 jorge@jorgechamorro.com
 
 var kCuantos= 5e3;

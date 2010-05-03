@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 //20100409 jorge@jorgechamorro.com
 //For NodeJS > v 0.1.33 (NOT 0.1.33)
 

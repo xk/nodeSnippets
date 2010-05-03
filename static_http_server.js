@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+//201003xx jorge@jorgechamorro.com
+
 var path = require("path");
 libDir = path.join(path.dirname(__filename), "../lib");
 require.paths.unshift(libDir);

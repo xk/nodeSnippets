@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+//201003xx jorge@jorgechamorro.com
 //http://catonmat.net/http-proxy-in-nodejs
 //modificado por jorge@jorgechamorro.com
 

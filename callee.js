@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+//201003xx jorge@jorgechamorro.com
+
 var sys= require("sys");
 
 var k1= 2e3;
