@@ -40,23 +40,17 @@ exports.compilar= function (codigo, lenguaje, callBack) {
     //Una f() que almacena y procesa su stdout:
     proceso.stdout.addListener('data', function (data) {
       proceso.buffer+= data;
-      proceso.despacha();
-    });
-    
-    //un despachador: se encarga de despachar los resultados de cada llamada al callback que le corresponde:
-    proceso.despacha= function () {
-      var newLinePos;
+      var item, newLinePos;
       while ((newLinePos= proceso.buffer.indexOf("\n")) >= 0) {
-        var res= proceso.buffer.substring(0, newLinePos);
-        var item= proceso.inputs.shift();
+        item= proceso.inputs.shift();
         if (item) {
-          item.output= res;
+          item.output= proceso.buffer.substring(0, newLinePos);
           item.timeOut= +new Date();
           item.callback(item);
         }
         proceso.buffer= proceso.buffer.substr(newLinePos+1);
       }
-    };
+    });
     
     function pepito (param, cb) {
       //Esta es la función que comunica con el proceso:

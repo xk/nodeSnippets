@@ -19,14 +19,15 @@ require("./inline").compilar('\
 
 function seHaAcabadoDeCompilar (error, pepito) {
   var resultados= [];
-  var AUN_NO= true;
-  var n= (process.argv[2] && +process.argv[2]) || 9;
+  var n= (process.argv[2] && (+process.argv[2] > 0) && +process.argv[2]) || 9;
   function callBack (item) { resultados.push(item); }
   
   if (error) return sys.puts(error);
   
-  //Ejecutamos las pruebas que demuestran que funciona:
+  //Llamarla en bucle para demostrar que funciona:
   while (n--) pepito(n, callBack);
+
+  require("sys").puts("\nYa hemos hecho todas las llamadas a la función en un bucle.\nAhora mismo se están ejecutando en otro proceso.\nEstamos esperando los resultados...\n");
 
   (function monitor (item) {
     //Muestra resultados a medida que los haya
