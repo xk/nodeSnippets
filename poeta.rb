@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby -wKU
 # poeta.rb
 #   juanfc 2010-04-14
-# 
 
 kCuantos= 5e3
 kLength= 8192
@@ -30,7 +29,6 @@ end
 while $ctr < kCuantos do
   poema(kLength)
 end
-
 
 puts(kCuantos.to_s + " poemas de "+ kLength.to_s+ " caracteres.");
 puts((now=Time.now - now).to_s + " segundos.");
