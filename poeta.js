@@ -5,7 +5,7 @@ var kCuantos= 5e3;
 var kLength= 16*1024;
 var ctr= 0;
 var now= +new Date();
-var puts= require("sys").puts;
+var puts= print;
 
 function rnd (n) {
   return (n* Math.random()) >>> 0;
