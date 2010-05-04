@@ -1,11 +1,10 @@
-#!/usr/bin/env node
 //20100412 jorge@jorgechamorro.com
 
 var kCuantos= 5e3;
-var kLength= 16*1024;
+var kLength= 8192;
 var ctr= 0;
 var now= +new Date();
-var puts= print;
+var puts= require("sys").puts;
 
 function rnd (n) {
   return (n* Math.random()) >>> 0;
@@ -13,28 +12,22 @@ function rnd (n) {
 
 var words= "Con diez cañones por banda viento en popa a toda vela no corta el mar si no vuela un velero bergantín bajel pirata llamado por su bravura el temido en todo el mar conocido del uno al otro confín".toLowerCase().split(" ");
 
-function poeta (length, poema, curr, prev) {
-  poema= "";
-  while (poema.length < length) {
+function poeta (length, r, curr, prev) {
+  r= "";
+  while (r.length < length) {
     do {
       curr= words[rnd(words.length)];
     } while (curr === prev);
-    poema+= (prev= curr)+ " ";
+    r+= (prev= curr)+ " ";
   }
   ctr++;
-  return poema;
+  return r;
 }
 
-var poemas= [];
 while (ctr < kCuantos) {
-  //poemas.push(poeta(kLength));
   poeta(kLength);
 }
 
-Number.prototype.to_s= function (p) {
-  return (this / 1e3).toFixed(p);
-};
-
 puts(kCuantos+ " poemas de "+ kLength+ " caracteres.");
-puts((now= (new Date()- now).to_s(1))+ " segundos.");
+puts((now= (+new Date()- now)/1e3).toFixed(1)+ " segundos.");
 puts((kCuantos/ now).toFixed(1)+ " poemas / segundo.");
