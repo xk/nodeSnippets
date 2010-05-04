@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 //20100504 jorge@jorgechamorro.com
 //Para chinchar a los locos del Ruby.
 //Módulo inline para Node: permite compilar un .c y usarlo desde Node.

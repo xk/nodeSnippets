@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 //20100504 jorge@jorgechamorro.com
 //Módulo para compilar y lanzar procesos escritos en otros lenguajes.
 
