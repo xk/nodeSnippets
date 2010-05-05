@@ -20,7 +20,7 @@ function poeta (length, r, curr, prev, l) {
   while (l < length) {
     do curr= words[rnd(words.length)]; while (curr === prev);
     r.push(prev= curr);
-    l+= prev.length;
+    l+= prev.length+ 1;
   }
   ctr++;
   return r.join(" ");
