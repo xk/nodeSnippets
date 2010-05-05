@@ -6,9 +6,7 @@ var sys= (require && require("sys")) || {};
 var puts= (global.console && console.log && (function (p) { console.log(p) })) || sys.puts || global.print || global.alert;
 var inspect= sys.inspect || JSON.stringify;
 
-var clase= { foo: function () {
-  return inspect(this);
-}};
+var clase= { foo: function () { return inspect(this); }};
 
 var array= [1,2];
 array.__proto__= clase;
