@@ -1,7 +1,12 @@
-#!/usr/bin/env node
+//#!/usr/bin/env node
 //201003xx jorge@jorgechamorro.com
 //http://catonmat.net/http-proxy-in-nodejs
 //modificado por jorge@jorgechamorro.com
+
+//lanzar node proxy.js, y ajustar preferencias del sistema/network/web/http proxy al puerto 8080
+//este proxy vuela por que lo guarda todo en cache (en RAM) hasta reventar, y no refresca nunca la cache:
+//el contenido que guarda la primera vez, es el que va servir ya para siempre... :-)
+//es un experimento y funciona bien, pero no un proxy que se pueda utilizar de verdad.
 
 var http = require('http');
 var sys = require('sys');
@@ -27,6 +32,7 @@ http.createServer(function (request, response) {
     }
     response.end();
     log("["+cached.chunks.length+"]chunks:fromCache:"+logTxt);
+    
   } else {
 
     var proxy = http.createClient(80, request.headers['host'])
