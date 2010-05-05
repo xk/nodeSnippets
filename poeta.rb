@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby -wKU
 # poeta.rb
 #   juanfc 2010-04-14
+#5000.0 poemas de 8192 caracteres.
+#40.628416 segundos.
+#123.066574881974 poemas / segundo.
 
 kCuantos= 5e3
 kLength= 8192

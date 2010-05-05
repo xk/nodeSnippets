@@ -1,4 +1,7 @@
 //20100412 jorge@jorgechamorro.com
+//5000 poemas de 8192 caracteres.
+//1.4 segundos.
+//3597.1 poemas / segundo.
 
 var puts= require("sys").puts;
 var kCuantos= 5e3;
