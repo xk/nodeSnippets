@@ -21,7 +21,8 @@ puts("array instanceof Array: "+ (array instanceof Array));
 puts(array.foo());
 
 /*
-$ node arraySubClass.js [ 1, 2, 3 ]
+$ node arraySubClass.js
+[ 1, 2, 3 ]
 array.length:3
 array.length:6
 array instanceof Array: true
