@@ -14,18 +14,22 @@ subClase.__proto__= Array.prototype;
 
 array.push(3);
 puts(array.foo());
-puts("array.length:"+ array.length);
+puts("array.length: "+ array.length);
 array[5]= 5;
-puts("array.length:"+ array.length);
-puts("array instanceof Array: "+ (array instanceof Array));
 puts(array.foo());
+puts("array.length: "+ array.length);
+array.length= 0;
+puts(array.foo());
+puts("array.length: "+ array.length);
+puts("array instanceof Array: "+ (array instanceof Array));
 
 /*
-$ node arraySubClass.js
+$ node arraySubClass.js 
 [ 1, 2, 3 ]
-array.length:3
-array.length:6
-array instanceof Array: true
+array.length: 3
 [ 1, 2, 3, 5 ]
-
+array.length: 6
+[]
+array.length: 0
+array instanceof Array: true
 */
