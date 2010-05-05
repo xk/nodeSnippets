@@ -1,5 +1,6 @@
 //#!/usr/bin/env node
 //20100505 jorge@jorgechamorro.com
+//Subclasses of Array
 
 var global= Function("return this")();
 var sys= (require && require("sys")) || {};
