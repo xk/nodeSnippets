@@ -39,12 +39,13 @@ Init the input text to be fed to gzip
 
 
 var chunks= (function (c, txt) {
-  while ((txt+= (c[c.length]= poema(rnd(1024))+ " ")).length < 512*1024 ) ;
+  txt= poema(4096)+ " ";
+  while (c.push(txt) < (4*1024*1024/txt.length) ) ;
   return c;
 })([], "");
 
 console.log("\"I\" === input chunks, \"O\" === output chunks.");
-
+console.log("Input text length: "+ chunks.join("").length+ " characters");
 /*
 Gzip it in small chunks fed to single gzip process
 */
