@@ -1,8 +1,9 @@
 /*
-
+2010-08-27 jorge@jorgechamorro.com
 Node.js:
-Program to monitors the behaviour of a gzip child process when its input is fed via stdin in small chunks, vs in a single piece.
+Program to monitor the behaviour of a gzip child process when its input is fed via stdin in small chunks, vs in a single piece.
 
+See: http://groups.google.com/group/nodejs/browse_thread/thread/b9ba7dd6d0b39bb9#421164b67ed93e59
 */
 
 function rnd (n) { return Math.floor(n* Math.random()) }
@@ -36,46 +37,78 @@ function newGzipper () {
 Init the input text to be fed to gzip
 */
 
-var inputTxt= poema(512*1024) /* 512 kilobytes */, verifyInputTxt= "";
+
+var chunks= (function (c, txt) {
+  while ((txt+= (c[c.length]= poema(rnd(1024))+ " ")).length < 512*1024 ) ;
+  return c;
+})([], "");
+
+console.log("\"I\" === input chunks, \"O\" === output chunks.");
 
 /*
-Gzip it in small chunks
+Gzip it in small chunks fed to single gzip process
 */
 
-inChunks= {
+inChunksGOOD= {
   gzip: newGzipper(),
   outputLen: 0,
   trace: "",
   cursor: 0
 };
 
-inChunks.gzip.stdout.on('data', function (data) {
-  inChunks.outputLen+= data.length;
-  inChunks.trace+= "O";
+inChunksGOOD.gzip.stdout.on('data', function (data) {
+  inChunksGOOD.outputLen+= data.length;
+  inChunksGOOD.trace+= "O";
 });
 
-inChunks.gzip.stdout.on('end', function (data) {
-  console.log("\nCHUNKED:\nTRACE: "+ inChunks.trace+ "*END*\nOUTPUT: "+ inChunks.outputLen+ " bytes");
-  console.log("verifyInputTxt === inputTxt --> "+ (verifyInputTxt === inputTxt))
+inChunksGOOD.gzip.stdout.on('end', function () {
+  console.log("\nWELL CHUNKED:\nTRACE: "+ inChunksGOOD.trace+ "*END*\nOUTPUT: "+ inChunksGOOD.outputLen+ " bytes");
 });
   
 (function chunker () {
-  //feeds inputTxt to the gzipper in chunks of no more than 1k at a rate of about 50 chunks per second
-  var chunk= inputTxt.substr(inChunks.cursor, 1+ rnd(1024));
-  verifyInputTxt+= chunk;
-  inChunks.cursor+= chunk.length;
-  if (inChunks.cursor < inputTxt.length) { 
-    inChunks.gzip.stdin.write(chunk, encoding='utf8');
-    setTimeout(chunker, 1e3/70); //70 chunks per second
+  //feeds the chunks.
+  if (inChunksGOOD.cursor < chunks.length) {
+    inChunksGOOD.gzip.stdin.write(chunks[inChunksGOOD.cursor++], encoding='utf8');
+    setTimeout(chunker, 1e3/60);
   } else {
-    inChunks.gzip.stdin.end(chunk, encoding='utf8');
+    inChunksGOOD.gzip.stdin.end(chunks[inChunksGOOD.cursor++], encoding='utf8');
   }
-  inChunks.trace+= "I";
+  inChunksGOOD.trace+= "I";
 })();
 
 
 /*
-And gzip it too in a single piece.
+Gzip it in small chunks fed to -many- gzip processes. (BAD, BAD, very bad).
+*/
+
+inChunksBAD= {
+  gzip: null,
+  outputLen: 0,
+  trace: "",
+  cursor: 0
+};
+
+(function chunker () {
+  //feeds the chunks to the gzippers at a rate as fast as possible.
+  inChunksBAD.gzip= newGzipper();
+  
+  inChunksBAD.gzip.stdout.on('data', function (data) {
+    inChunksBAD.outputLen+= data.length;
+    inChunksBAD.trace+= "O";
+  });
+
+  inChunksBAD.gzip.stdout.on('end', function () {
+    if (inChunksBAD.cursor < chunks.length) return setTimeout(chunker, 5);
+    console.log("\nBADLY CHUNKED:\nTRACE: "+ inChunksBAD.trace+ "*END*\nOUTPUT: "+ inChunksBAD.outputLen+ " bytes");
+  });
+  
+  inChunksBAD.gzip.stdin.end(chunks[inChunksBAD.cursor++], encoding='utf8');
+  inChunksBAD.trace+= "I";
+})();
+
+
+/*
+And gzip it too in a single piece and with a single gzip process.
 */
 
 inASinglePiece= {
@@ -93,6 +126,5 @@ inASinglePiece.gzip.stdout.on('end', function (data) {
   console.log("\ninASinglePiece:\nTRACE: "+ inASinglePiece.trace+ "*END*\nOUTPUT: "+ inASinglePiece.outputLen+ " bytes");
 });
   
-inASinglePiece.gzip.stdin.end(inputTxt, encoding='utf8');
+inASinglePiece.gzip.stdin.end(chunks.join(""), encoding='utf8');
 
-console.log("\"I\" === input chunks, \"O\" === output chunks.");
