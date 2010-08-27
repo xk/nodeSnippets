@@ -53,7 +53,7 @@ inChunksGOOD= {
   gzip: newGzipper(),
   outputLen: 0,
   trace: "",
-  cursor: 0
+  chunkIndex: 0
 };
 
 inChunksGOOD.gzip.stdout.on('data', function (data) {
@@ -67,11 +67,11 @@ inChunksGOOD.gzip.stdout.on('end', function () {
   
 (function chunker () {
   //feeds the chunks.
-  if (inChunksGOOD.cursor < chunks.length) {
-    inChunksGOOD.gzip.stdin.write(chunks[inChunksGOOD.cursor++], encoding='utf8');
+  if (inChunksGOOD.chunkIndex < chunks.length) {
+    inChunksGOOD.gzip.stdin.write(chunks[inChunksGOOD.chunkIndex++], encoding='utf8');
     setTimeout(chunker, 1e3/60);
   } else {
-    inChunksGOOD.gzip.stdin.end(chunks[inChunksGOOD.cursor++], encoding='utf8');
+    inChunksGOOD.gzip.stdin.end(chunks[inChunksGOOD.chunkIndex++], encoding='utf8');
   }
   inChunksGOOD.trace+= "I";
 })();
@@ -85,7 +85,7 @@ inChunksBAD= {
   gzip: null,
   outputLen: 0,
   trace: "",
-  cursor: 0
+  chunkIndex: 0
 };
 
 (function chunker () {
@@ -98,11 +98,11 @@ inChunksBAD= {
   });
 
   inChunksBAD.gzip.stdout.on('end', function () {
-    if (inChunksBAD.cursor < chunks.length) return setTimeout(chunker, 5);
+    if (inChunksBAD.chunkIndex < chunks.length) return setTimeout(chunker, 5);
     console.log("\nBADLY CHUNKED:\nTRACE: "+ inChunksBAD.trace+ "*END*\nOUTPUT: "+ inChunksBAD.outputLen+ " bytes");
   });
   
-  inChunksBAD.gzip.stdin.end(chunks[inChunksBAD.cursor++], encoding='utf8');
+  inChunksBAD.gzip.stdin.end(chunks[inChunksBAD.chunkIndex++], encoding='utf8');
   inChunksBAD.trace+= "I";
 })();
 
