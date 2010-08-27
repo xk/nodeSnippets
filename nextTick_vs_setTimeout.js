@@ -9,13 +9,12 @@ var timeout= 0;
 var seconds= 0;
 
 function display () {
+  setTimeout(display, 1e3);
   seconds++;
   var txt= "nextTick: "+ nxttick+ " ["+ toKHz(nxttick)+ " KHz]";
   txt+= ", setTimeout: "+ timeout+ " ["+ toKHz(timeout)+ " KHz]";
   txt+= ", count(nextTick)- count(setTimeout)= "+ (nxttick-timeout);
   console.log(txt);
-  setTimeout(display, 1e3);
-  
   function toKHz (count) { return (count/seconds/1e3).toFixed(2); }
 };
 
