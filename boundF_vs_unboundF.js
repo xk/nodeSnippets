@@ -1,19 +1,19 @@
-max= 1e4;
-function cb () {}
-var q= [];
+var max= 1e4;
+function un_bound () {}
+var bound= un_bound.bind({});
 
 function a () {
-  t= Date.now();
-  n= 0;
-  while (n < max) q[n++]= {f:cb};
+  var t= Date.now();
+  var n= 1e4;
+  while (n--) un_bound();
   a.ms+= (Date.now()- t);
   a.ctr++;
 }
 
 function b () {
-  t= Date.now();
-  n= 0;
-  while (n < max) q[n++]= [cb];
+  var t= Date.now();
+  var n= 1e4;
+  while (n--) bound();
   b.ms+= (Date.now()- t);
   b.ctr++;
 }
