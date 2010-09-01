@@ -71,16 +71,16 @@ var tests= [u,b];
 
 tests.forEach(function (v,i,o) { v.ctr= v.ms= 0 });
 
-setInterval(function () {
-  var n= 0, txt= "\r",  loops= [],  tAcum= [];
+setInterval(function displayResults () {
+  var n= 0, txt= "\r",  calls= [],  tAcum= [];
   while (n < tests.length) {
    var f= tests[n], name= f.name;
    txt+= name+ ": "+ ((f.ms*1e6)/(f.ctr*kMax*20*10)).toFixed(2)+ " ns  ";
-   loops[n]= f.ctr;
+   calls[n]= f.ctr*kMax*20*10;
    tAcum[n]= f.ms;
    n++;
   }
-  txt+= "loops: ["+ loops+ "]  t acumulado: ["+ tAcum+ "]  acumulador: "+ acumulador;
+  txt+= "calls: ["+ calls+ "]  t acumulado: ["+ tAcum+ "]  acumulador: "+ acumulador;
   console.log(txt);
 }, 1e3);
 
