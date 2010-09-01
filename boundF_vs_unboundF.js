@@ -24,7 +24,7 @@ var tests;
 function tester (f) {
   var n= kLoops;
   var t= Date.now();
-  while (n--) f(0)+ f(0)+ f(0)+ f(0)+ f(0);  
+  while (n--) f(0), f(0), f(0), f(0), f(0);
   f.ms+= (Date.now()- t);
   f.ctr+= kLoops* kMul;
 }
