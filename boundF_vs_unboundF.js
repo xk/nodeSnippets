@@ -1,30 +1,35 @@
-var kMax= 1e4;
+/*
+2010-09-01 jorge@jorgechamorro.com
+Compara la velocidad de las llamadas a una f y a esa misma f.bind({})
+Node.js
+*/
+
+var kMax= 2e3;
 
 function un_bound (a) { return a+ Math.random() }
 var bound= un_bound.bind({});
 
 var acumulador= 0;
 
-function a () {
+function u () {
 var n= kMax;
   var t= Date.now();
-  while (n--) acumulador+= un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0);
-  a.ms+= (Date.now()- t);
-  a.ctr++;
+  while (n--) acumulador+= un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0);
+  u.ms+= (Date.now()- t);
+  u.ctr++;
 }
 
 function b () {
 var n= kMax;
   var t= Date.now();
-  while (n--) acumulador+= bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0);
+  while (n--) acumulador+= bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0);
   b.ms+= (Date.now()- t);
   b.ctr++;
 }
 
-a.ctr= a.ms= 0;
-b.ctr= b.ms= 0;
+var tests= [u,b];
 
-var tests= [a,b];
+tests.forEach(function (v,i,o) { v.ctr= v.ms= 0 });
 
 setInterval(function () {
   var n= 0, txt= "\r",  loops= [],  tAcum= [];
