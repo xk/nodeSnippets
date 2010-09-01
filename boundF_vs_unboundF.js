@@ -12,7 +12,7 @@ var bound= un_bound.bind({});
 var acumulador= 0;
 
 function u () {
-var n= kMax;
+  var n= kMax;
   var t= Date.now();
   /* 20 *10 calls */
   while (n--) acumulador+= /* 24 *6 calls */ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ un_bound(0)+ 
@@ -40,7 +40,7 @@ var n= kMax;
 }
 
 function b () {
-var n= kMax;
+  var n= kMax;
   var t= Date.now();
   /* 20 *10 calls */ 
   while (n--) acumulador+= bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+ bound(0)+
