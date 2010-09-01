@@ -1,19 +1,22 @@
-var max= 1e4;
-function un_bound () {}
+var kMax= 1e4;
+
+function un_bound (a) { return a+ Math.random() }
 var bound= un_bound.bind({});
+
+var acummulator= 0;
 
 function a () {
   var t= Date.now();
-  var n= 1e4;
-  while (n--) un_bound();
+  var n= kMax;
+  while (n--) acummulator+= un_bound();
   a.ms+= (Date.now()- t);
   a.ctr++;
 }
 
 function b () {
   var t= Date.now();
-  var n= 1e4;
-  while (n--) bound();
+  var n= kMax;
+  while (n--) acummulator+= bound();
   b.ms+= (Date.now()- t);
   b.ctr++;
 }
