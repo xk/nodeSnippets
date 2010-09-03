@@ -60,7 +60,7 @@ function test (f) {
   var i = kLoops;
   var t = Date.now();
   while (i--) f(), f(), f(), f(), f(), f(), f(), f(), f(), f();
-  var t = Date.now()- t;
+  t = Date.now()- t;
   i= kLoops * kMul;
   console.log( pad(t, 5) + " ms  " + pad((1e6*t/i).toFixed(2), 6)+ " ns"+ pad((i/t/1e3).toFixed(2), 8) + " Mhz"+ pad(f(), 12) );
 }
