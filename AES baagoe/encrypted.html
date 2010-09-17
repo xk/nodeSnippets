@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+  <title>Client-side password protection</title>
+  <script type="application/ecmascript" src="veness.es"></script>
+  <script type="application/ecmascript">
+    var crypt = 'fsfrS2FhYWGJCTFq4/ALJ6ri+MZ9tpNgdwqqI5BsxeVd+EZMd2';
+    crypt += 'N2UsZtyCaAeinzpj05t91GkTIUwhtdgE9plM45a64b2Kg/OhOk';
+    crypt += '4JLySoh3pXSj2MLTeq06Ec9nJWyeJ5UA7VcpcbkoOwy5RjaOup';
+    crypt += 'lrVhCZH/T2WEXOH9JGZ7D8r3hsrffiZMWfE57o+ycWSKgmn0Jy';
+    crypt += 'khs4eh8i236lBZg1ai89qSmwXniygUGJ58b2Ea3YVBJxqc4NX6';
+    crypt += 'FH5xD1qbmOsPFoSIflhRGuv3jb7rw+N34UfwVYUyRkLyuFhd+e';
+    crypt += 'n4ggMQrFQf/cvfsofOkWVIYdCmLwQHUzs2ytH2k4ec69nglaoT';
+    crypt += '+F/OJstPGlhlDWW6DfG9bm0jUAmEZRSiFufT9tTf3q+St8Twxg';
+    crypt += 'BOJ9GNfYbg==';
+
+    var plain;
+
+    function show(key) {
+      plain = AesCtr.decrypt(crypt, key, 256);
+      if (plain.substring(0, 5) == '<body') {
+        document.write(plain);
+      } else {
+        alert("Sorry, wrong password");
+      }
+    }
+    
+    //BTW, the pwd is Riekei1e
+  </script>
+</head>
+
+<body>
+  <h1>Client-side password protection</h1>
+  <p>Please enter the password: <input type="password" onchange="show(this.value)"></p>
+</body>
+</html>
