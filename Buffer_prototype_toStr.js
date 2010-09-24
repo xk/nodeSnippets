@@ -61,6 +61,7 @@ Buffer.prototype.toStr= (function () {
     r= "";
     var table= toStr[(''+ encoding).toLowerCase()];
     if (!table) throw Error("Unknown encoding");
+    
     while (start < end) {
       r+= table[this[start++]];
     }
@@ -70,7 +71,7 @@ Buffer.prototype.toStr= (function () {
   toStr["iso8859-1"]= (function () {
     //http://en.wikipedia.org/wiki/ISO-8859-1#Codepage_layout
     var t= [];
-    var t= [];
+
     [0, 255].upto(function (i) {
       var hex= i < 16 ? '0'+ (i).toString(16) : (i).toString(16);
       //console.log([i,hex]);
@@ -82,6 +83,7 @@ Buffer.prototype.toStr= (function () {
   toStr["windows-1252"]= (function () {
     //http://en.wikipedia.org/wiki/Windows-1252#Codepage_layout
     var t= [];
+    
     [255, 0].downto(function (i) {
       var hex= i < 16 ? '0'+ (i).toString(16) : (i).toString(16);
       t[i]= eval('"\\x'+ hex+ '"');
@@ -119,6 +121,10 @@ Buffer.prototype.toStr= (function () {
   
   return toStr;
 })();
+
+
+/* ************************************************************************** */
+
 
 
 function pad (s, l) {
