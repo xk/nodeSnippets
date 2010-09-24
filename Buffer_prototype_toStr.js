@@ -35,13 +35,12 @@ Buffer.prototype.toStr= (function () {
   }
   
   function toStr (encoding, start, end) {
-    var r;
-    
+    //Try with the built-in first :
     try {
-      r= this.toString(encoding, start, end);
-      return r;
+      return this.toString(encoding, start, end);
     } catch (e) { }
     
+    //If no luck let's do it in js.
     if (typeof start === 'undefined') {
       start= 0;
     }
@@ -58,7 +57,7 @@ Buffer.prototype.toStr= (function () {
       if (end > this.length) end= this.length;
     }
     
-    r= "";
+    var r= "";
     var table= toStr[(''+ encoding).toLowerCase()];
     if (!table) throw Error("Unknown encoding");
     
@@ -67,6 +66,11 @@ Buffer.prototype.toStr= (function () {
     }
     return r;
   }
+  
+  /*
+    To add an encoding just build the lookup table and attach is to .toStr
+    as a property whith the name of the encoding:
+  */
   
   toStr["iso8859-1"]= (function () {
     //http://en.wikipedia.org/wiki/ISO-8859-1#Codepage_layout
@@ -145,7 +149,7 @@ console.log("\rwin.length === iso.length : "+ (win.length === iso.length));
 console.log("\rwin.length === utf.length : "+ (win.length === utf.length));
 console.log("\riso.length === utf.length : "+ (iso.length === utf.length));
 
-console.log('\r   win   iso   utf win iso utf\r');
+console.log('\r   win   iso   utf  win iso utf\r');
 
 [32,255].upto(function (i) {
   var c_win= win[i];
