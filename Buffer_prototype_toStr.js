@@ -69,7 +69,7 @@ Buffer.prototype.toStr= (function () {
   
   /*
     To add an encoding just build the lookup table and attach is to .toStr
-    as a property whith the name of the encoding:
+    as a property with the name of the encoding:
   */
   
   toStr["iso8859-1"]= (function () {
