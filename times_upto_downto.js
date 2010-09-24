@@ -29,6 +29,7 @@ if (!Array.prototype.upto) {
       var start= +this[0];
       var end= +this[1];
       while (start <= end) f(start++);
+      return this;
     }
   });
 }
@@ -53,6 +54,7 @@ if (!Array.prototype.downto) {
       var start= +this[0];
       var end= +this[1];
       while (start >= end) f(start--);
+      return this;
     }
   });
 }
