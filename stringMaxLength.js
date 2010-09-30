@@ -2,20 +2,30 @@
 //20100507 jorge@jorgechamorro.com
 //Calcula el tamaño máximo que puede tener una string
 //uso: node stringMaxLength.js
-//En mi Mac da error al llegar a 1GB (1024MB)
 
-var sys= require("sys");
-var str1M= (function () {
-  var s= "0";
-  while (s.length < (1024*1024)) s+= s;
-  return s;
-})();
+function rndStr (len) {
+  var str= "";
+  while (str.length < len) {
+    str+= String.fromCharCode(32+ Math.floor(Math.random()* 96));
+  }
+  return str;
+}
 
+var baseMem;
 var testStr= "";
-sys.puts(str1M.length);
-(function loop (RUN) {
-  sys.puts((((testStr+= str1M).length / (1024*1024)) >>> 0)+ "MB");
-  process.nextTick(loop);
-})();
+var global= (function () { return this })();
 
+if (global.process && global.process.memoryUsage) {
+  baseMem= global.process.memoryUsage().heapTotal;
+}
+
+(function loop () {
+  testStr+= rndStr(512*1024);
+  var txt= "str.length -> "+ (testStr.length / (1024*1024)).toFixed(1) + " MB";
+  if (global.process && global.process.memoryUsage) {
+    txt+= ", heap \u2206 -> +"+ ((global.process.memoryUsage().heapTotal- baseMem) / (1024*1024)).toFixed(1)+ " MB";
+  }
+  console.log(txt);
+  setTimeout(loop, 0);
+})();
 
