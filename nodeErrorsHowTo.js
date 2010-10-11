@@ -11,12 +11,10 @@ var inspect= require('sys').inspect;
 })();
 
 function wrap (f) {
-  try {
-    throw Error('previousTrace');
-  } catch (e) {
-    Error.captureStackTrace(e, wrap);
-    var stackTrace= e.stack.split("\n");
-  }
+  var stackTrace= Error('previousTrace');
+  Error.captureStackTrace(stackTrace, wrap);
+  stackTrace= stackTrace.stack.split("\n");
+  
   return function () {
     try {
       var res= f();
