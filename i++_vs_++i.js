@@ -76,5 +76,5 @@ var postAcumulador= 0;
   postAcumulador+= post[0];
   ctr+= pre[1];
   display();
-  setTimeout(tester, 333);
+  setTimeout(tester, 99);
 })();

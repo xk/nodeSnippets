@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
   <title>Client-side password protection</title>
-  <script type="application/ecmascript" src="veness.es"></script>
+  <script type="application/ecmascript" src="veness.js"></script>
   <script type="application/ecmascript">
     var crypt = 'fsfrS2FhYWGJCTFq4/ALJ6ri+MZ9tpNgdwqqI5BsxeVd+EZMd2';
     crypt += 'N2UsZtyCaAeinzpj05t91GkTIUwhtdgE9plM45a64b2Kg/OhOk';
@@ -17,7 +17,8 @@
     crypt += 'BOJ9GNfYbg==';
 
     var plain;
-
+    debugger;
+    
     function show(key) {
       plain = AesCtr.decrypt(crypt, key, 256);
       if (plain.substring(0, 5) == '<body') {

@@ -17,9 +17,11 @@ var kMul= 5;
 function unbound (a) { return a }
 var bound= unbound.bind({});
 var wow= unbound.fakeBind({});
+function tryIt (a) { try { return a; } catch (e) {} };
+function tryItFinally (a) { try { return a; } catch (e) {} finally {} };
 
 var tests;
-(tests= [unbound, bound, wow]).forEach( function (v,i,o) { v.ctr= v.ms= 0 } );
+(tests= [unbound, bound, wow, tryIt, tryItFinally]).forEach( function (v,i,o) { v.ctr= v.ms= 0 } );
 
 function tester (f) {
   var n= kLoops;
