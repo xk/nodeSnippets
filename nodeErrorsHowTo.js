@@ -32,7 +32,6 @@ function i () {
 
 process.on('uncaughtException', function ƒ (err) {
   var previous= err.previousStackTrace;
-  Error.captureStackTrace(err, ƒ);
   var stack= err.stack.split("\n");
   console.log('Caught exception:\n', inspect(stack,0,99,1,1), "\n", inspect(previous,0,99,1,1));
 });
@@ -41,7 +40,9 @@ process.on('uncaughtException', function ƒ (err) {
 
 Caught exception:
  [ 'Error: This is the error that we want to track'
-, '    at EventEmitter.emit (events:41:20)'
+, '    at Error (unknown source)'
+, '    at i (/Users/jorge/JAVASCRIPT/nodeSnippets/nodeErrorsHowTo.js:30:9)'
+, '    at Timer.callback (/Users/jorge/JAVASCRIPT/nodeSnippets/nodeErrorsHowTo.js:20:16)'
 , '    at node.js:599:9'
 ] 
  [ 'Error: previousTrace'
