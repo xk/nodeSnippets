@@ -1,9 +1,13 @@
 var inspect= require('sys').inspect;
 
-(function f () {
-  (function g () {
-    setTimeout(wrap(i), 10);
-  })();
+(function d () {
+  (function e () {
+    (function f () {
+      (function g () {
+        setTimeout(wrap(i), 10);
+      })();
+    })();
+  })();  
 })();
 
 function wrap (f) {
