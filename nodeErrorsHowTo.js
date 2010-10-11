@@ -37,11 +37,13 @@ process.on('uncaughtException', function ƒ (err) {
 Caught exception:
  [ 'Error: This is the error that we want to track'
 , '    at Error (unknown source)'
-, '    at i (/Users/jorge/JAVASCRIPT/nodeSnippets/nodeErrorsHowTo.js:30:9)'
-, '    at Timer.callback (/Users/jorge/JAVASCRIPT/nodeSnippets/nodeErrorsHowTo.js:20:16)'
+, '    at Timer.i (/Users/jorge/JAVASCRIPT/nodeSnippets/nodeErrorsHowTo.js:27:9)'
+, '    at Timer.callback (/Users/jorge/JAVASCRIPT/nodeSnippets/nodeErrorsHowTo.js:18:16)'
 , '    at node.js:599:9'
 ] 
  [ 'Error: previousTrace'
+, '    at Error (unknown source)'
+, '    at wrap (/Users/jorge/JAVASCRIPT/nodeSnippets/nodeErrorsHowTo.js:14:19)'
 , '    at g (/Users/jorge/JAVASCRIPT/nodeSnippets/nodeErrorsHowTo.js:7:20)'
 , '    at f (/Users/jorge/JAVASCRIPT/nodeSnippets/nodeErrorsHowTo.js:8:8)'
 , '    at e (/Users/jorge/JAVASCRIPT/nodeSnippets/nodeErrorsHowTo.js:9:6)'
@@ -50,8 +52,6 @@ Caught exception:
 , '    at Module._compile (node.js:315:23)'
 , '    at Object..js (node.js:323:12)'
 , '    at Module.load (node.js:250:25)'
-, '    at Object.runMain (node.js:337:24)'
-, '    at Array.0 (node.js:587:12)'
 ]
 
 */
