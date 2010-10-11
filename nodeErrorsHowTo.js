@@ -1,5 +1,9 @@
 var inspect= require('sys').inspect;
 
+function i () {
+  throw Error('This is the error that we want to track');
+}
+
 (function d () {
   (function e () {
     (function f () {
@@ -11,23 +15,15 @@ var inspect= require('sys').inspect;
 })();
 
 function wrap (f) {
-  var stackTrace= Error('previousTrace');
-  Error.captureStackTrace(stackTrace, wrap);
-  stackTrace= stackTrace.stack.split("\n");
-  
+  var stackTrace= Error('previousTrace').stack.split("\n");
   return function () {
     try {
-      var res= f();
+      return f.apply(this, arguments);
     } catch (e) {
       e.previousStackTrace= stackTrace;
       throw e;
     }
-    return res;
   };
-}
-
-function i () {
-  throw Error('This is the error that we want to track');
 }
 
 process.on('uncaughtException', function ƒ (err) {
