@@ -1,14 +1,21 @@
+#!/usr/bin/env node
+
+/*
+  20101026 jorge@jorgechamorro.com
+  repeteadly captures the Mac screen via screencapture, and serves it as a stream of <img>s
+*/
+
 var exec= require('child_process').exec;
 var fs= require('fs');
 var MAX_INT= Math.pow(2,53);
 var html= process.mainModule.chunks.srcHTML;
 var kPeriodoDeCaducidad= 222;
-var fifo= process.ENV.TMPDIR+ "_____________________nOdEfIfO_"+ Date.now().toString(36)+ (MAX_INT * Math.random()).toString(36);
+var fifo= process.ENV.TMPDIR+ "_____nOdEfIfO_"+ Date.now().toString(36)+ (MAX_INT * Math.random()).toString(36);
 exec('mkfifo '+ fifo, [], function (error, stdout, stderr) {
   if (error) throw error;
 });
 
-var capturaEnCurso= false;
+var capturaEnCurso;
 var ultimaCaptura;
 var cbQueue= [];
 
@@ -64,7 +71,7 @@ function exit () {
   if (!exit.flag) {
     exit.flag= 1;
     exec('rm '+ fifo, [], function (error, stdout, stderr) {
-      console.log('BYE');
+      console.log('\nBYE');
       process.exit(0);
     });
   }
@@ -72,6 +79,7 @@ function exit () {
 
 process.on('exit', exit);
 process.on('SIGINT', exit);
+process.on('uncaughtException', exit);
 
 /* beginchunk: srcHTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
