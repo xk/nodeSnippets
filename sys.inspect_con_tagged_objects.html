@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>untitled</title>
+  <meta name="generator" content="TextMate http://macromates.com/">
+  <meta name="author" content="Jorge">
+  <!-- Date: 2010-09-20 -->
+  <script>
+  window.onload= function () {
+    
+    var tagKey= (function rndStr (len, r) {
+      function rnd (n) {
+        return Math.floor(n* Math.random());
+      }
+      while (r.length < len) r+= (rnd(36)).toString(36);
+      return r;
+    })(96, "sys_inspect_tag_");
+    
+    window.inspect = function (obj, showHidden, depth, colors) {
+      var cleanUp= [];
+      
+      var stylize = function (str, styleType) {
+        // http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+        var styles = { 'bold'      : [1,  22]
+                     , 'italic'    : [3,  23]
+                     , 'underline' : [4,  24]
+                     , 'inverse'   : [7,  27]
+                     , 'white'     : [37, 39]
+                     , 'grey'      : [90, 39]
+                     , 'black'     : [30, 39]
+                     , 'blue'      : [34, 39]
+                     , 'cyan'      : [36, 39]
+                     , 'green'     : [32, 39]
+                     , 'magenta'   : [35, 39]
+                     , 'red'       : [31, 39]
+                     , 'yellow'    : [33, 39]
+                     };
+        var style = { "special": "grey"
+                    , "number": "blue"
+                    , "boolean": "blue"
+                    , "undefined": "red"
+                    , "null": "red"
+                    , "string": "green"
+                    , "date": "magenta"
+                    //, "name": intentionally not styling
+                    , "regexp": "cyan"
+                    }[styleType];
+        if (style) {
+          return '\033[' + styles[style][0] + 'm' + str +
+                 '\033[' + styles[style][1] + 'm';
+        } else {
+          return str;
+        }
+      };
+      if (! colors) {
+        stylize = function(str) { return str; };
+      }
+
+      function primitiveTypes (o) {
+        // Primitive types cannot have properties
+        switch (typeof o) {
+          case 'undefined':                  return 'undefined';
+          case 'string':                     return 'string';
+          case 'number':                     return 'number';
+          case 'boolean':                    return 'boolean';
+          case 'object':     if (o === null) return 'null';
+        }
+      }
+
+      function objectTypes (o) {
+        if (typeof o === 'function') {
+          if (isRegExp(o))                            return 'regexp'; 
+                                                      return 'function';
+        }
+        if (Array.isArray(o))                         return 'array';
+        if (isDate(o))                                return 'date';
+        if ((typeof o === "object") && (o !== null))  return 'object';
+        
+      }
+      
+      function sortAscending (a, b) {
+        return a > b ? 1 : a < b ? -1 : 0;
+      }
+      
+      function tagAndScan (o, path) {
+        function scan (o, path) {
+          o[tagKey].keysToVisit.forEach(function (key) {
+            var nuo= o[key];
+            //Only if it's an object, and a previously unseen one.
+            if (objectTypes(nuo) && !nuo.hasOwnProperty(tagKey)) {
+              tag(nuo, path+ "."+ key);
+            }
+          });
+        }
+        function tag (o, path) {
+          var keys0= Object.keys(o);
+          var keys1= showHidden ? Object.getOwnPropertyNames(o) : keys0;
+          o[tagKey]= {
+            preferredPath: path,
+            visibleKeys: keys0,
+            keysToVisit: keys1
+          };
+          cleanUp.push(o);
+        }
+        
+        tag(o, path);
+        scan(o, path);
+      }
+
+      function format(value, recurseTimes, path) {
+/*
+        // Provide a hook for user-specified inspect functions.
+        // Check that value is an object with an inspect function on it
+        if (value && typeof value.inspect === 'function' &&
+            // Filter out the sys module, it's inspect function is special
+            value !== exports &&
+            // Also filter out any prototype objects using the circular check.
+            !(value.constructor && value.constructor.prototype === value)) {
+          return value.inspect(recurseTimes);
+        }
+*/
+        // Primitive types cannot have properties
+        switch (primitiveTypes(value)) {
+          case 'undefined':                  return stylize('undefined', 'undefined');
+          case 'string':                     return stylize(JSON.stringify(value)
+                                                   .replace(/'/g, "\\'")
+                                                   .replace(/\\"/g, '"')
+                                                   .replace(/(^"|"$)/g, "'"), 'string');
+          case 'number':                     return stylize('' + value, 'number');
+          case 'boolean':                    return stylize('' + value, 'boolean');
+          case 'null':   if (value === null) return stylize('null', 'null');
+        }
+        
+        var type= objectTypes(value);
+        if (!type) throw new Error("Unknown object type");
+        
+        // Scan this object for references to other (as of yet unknown) objects,
+        // we want to look ahead their paths and keys.
+        // But only once: only if we've never seen it before.
+        if (!value.hasOwnProperty(tagKey)) {
+          tagAndScan(value, path);
+        }
+        
+        var theTag= value[tagKey];
+        var visibleKeys = theTag.visibleKeys;
+        var keysToVisit = theTag.keysToVisit;
+        
+        if (!keysToVisit.length) {
+          switch (type) {
+            case 'function':  return stylize('ƒ'+ (value.name ? ' '+ value.name : '')+ '(){}', 'function');
+            case 'regexp'  :  return stylize('' + value, 'regexp');
+            case 'date'    :  return stylize(value.toUTCString(), 'date');
+            case 'object'  :  return '{}';
+            case 'array'   :  return '[]';
+          }
+        }
+
+        var base, braces;
+        switch (type) {
+          case 'function':
+            base= stylize('ƒ'+ (value.name ? ' '+ value.name : '')+ '(){}', 'function');
+            braces = ["(", ")"];
+            break;
+          case 'regexp'  :
+            base= stylize('' + value, 'regexp');
+            braces = ["(", ")"];
+            break;
+          case 'date'    :
+            base= stylize(value.toUTCString(), 'date');
+            braces = ["(", ")"];
+            break;
+          case 'object'  :
+            base= '';
+            braces = ["{", "}"];
+            break;
+          case 'array'   :
+            base= '';
+            braces = ["[", "]"];
+            break;
+        }
+
+        if (recurseTimes < 0) {
+          //Trying to go deeper than allowed.
+          return stylize(braces[0]+ base+ "..."+ braces[1], type);
+        }
+
+        var output = keysToVisit.map(function (key) {
+          if (key === tagKey) {
+            console.log("***** oops: key === tagKey");
+            return "";
+          }
+          var name, str;
+          if (value.__lookupGetter__) {
+            if (value.__lookupGetter__(key)) {
+              if (value.__lookupSetter__(key)) {
+                str = stylize("[Getter/Setter]", "special");
+              } else {
+                str = stylize("[Getter]", "special");
+              }
+            } else {
+              if (value.__lookupSetter__(key)) {
+                str = stylize("[Setter]", "special");
+              }
+            }
+          }
+          if (visibleKeys.indexOf(key) < 0) {
+            name = "[" + key + "]";
+          }
+          if (!str) {
+            var o= value[key];
+            var preferredPath= ((o !== null) && (o !== undefined) && o.hasOwnProperty(tagKey) && o[tagKey].preferredPath);
+            var pathOfThis= path+ "."+ key;
+            //Primitives don't have their paths saved : we just expand them as they happen.
+            //Objects should only be expanded at their bestPaths: if this isn't it output its path as a pointer.
+            if (!preferredPath || (pathOfThis === preferredPath)) {
+              str = format(value[key], recurseTimes - 1, path+ "."+ key);
+              if (str.indexOf('\n') > -1) {
+                if (Array.isArray(value)) {
+                  str = str.split('\n').map(function(line) {
+                    return '  ' + line;
+                  }).join('\n').substr(2);
+                }
+                else {
+                  str = '\n' + str.split('\n').map(function(line) {
+                    return '   ' + line;
+                  }).join('\n');
+                }
+              }
+            } else {
+              str = stylize(preferredPath, 'pointer');
+            }
+          }
+          if (typeof name === 'undefined') {
+            if (type === 'array' && key.match(/^\d+$/)) {
+              return str;
+            }
+            name = JSON.stringify('' + key);
+            if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+              name = name.substr(1, name.length-2);
+              name = stylize(name, "name");
+            }
+            else {
+              name = name.replace(/'/g, "\\'")
+                         .replace(/\\"/g, '"')
+                         .replace(/(^"|"$)/g, "'");
+              name = stylize(name, "string");
+            }
+          }
+
+          return name + ": " + str;
+        });
+
+        var numLinesEst = 0;
+        var length = output.reduce(function(prev, cur) {
+            numLinesEst++;
+            if( cur.indexOf('\n') >= 0 ) {
+              numLinesEst++;
+            }
+            return prev + cur.length + 1;
+          },0);
+
+        if (length > 50) {
+          output = braces[0]
+                 + (base === '' ? '' : base + '\n ')
+                 + ' '
+                 + output.join('\n, ')
+                 + (numLinesEst > 1 ? '\n' : ' ')
+                 + braces[1]
+                 ;
+        }
+        else {
+          output = braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+        }
+
+        return output;
+      }
+      
+      delete obj[tagKey];
+      var r= format(obj, (typeof depth === 'undefined' ? 2 : depth), "->this");
+      cleanUp.forEach(function (o) {
+        delete o[tagKey];
+      });
+      return r;
+    };
+    
+
+    function isRegExp (o) {
+      return ({}).toString.call(o).toLowerCase().indexOf('regexp') >= 0;
+    }
+
+    function isDate (o) {
+      return ({}).toString.call(o).toLowerCase().indexOf('date') >= 0;
+    }
+    
+    function $ (id) { return document.getElementById(id) }
+    
+    var keep= ["$", "onload"];
+    var out= $('out');
+    var depth= +$('depth').innerHTML;
+    window.showHidden= false;
+    $('showHidden').onclick= function () {
+      showHidden= !!this.checked;
+      setTimeout(function(){$('btn').onclick();},0);
+    };
+    $('minus').onclick= function () {
+      if (--depth < 0) depth= 0;
+      $('depth').innerHTML= depth;
+      $('btn').onclick();
+    };
+    $('plus').onclick= function () {
+      if (++depth > 10) depth= 10;
+      $('depth').innerHTML= depth;
+      $('btn').onclick();
+    };
+    
+    window.$= $;
+    window.what= Function("var i= $(\"src\").value; if (!i.length) return eval(i); else return eval(\"(\"+ i+ \")\");");
+    
+    $('btn').onclick= function f () {
+      out.innerText= "...";
+      setTimeout(function () {
+        try {
+          var o= what();
+        } catch (e) {
+          return out.innerText= e.message;
+        }
+        var t= +new Date();
+        var r= inspect(o, showHidden, +$('depth').innerHTML);
+        var t= (+new Date- t)+ " ms\r\n";
+        out.innerText= t+ r;
+      },10);
+    }
+  };
+  </script>
+</head>
+<body style="margin:0;">
+<table height="100%" style="position:absolute: left:0; right:0; width:100%;">
+  <tr>
+    <td valign="top" style="border:1px solid red;" >
+      <p>
+        <span>show hidden:<input type="checkbox" id="showHidden"></span>
+        <button id="btn">INSPECT IT</button>
+        <button id="minus">--depth</button>
+        <span id="depth">2</span>
+        <button id="plus">++depth</button><br>
+        <textarea id="src" style="position:relative; bottom:0">{
+0:[a={}],
+1:[[a]],
+2:a,
+6:[[c= function(){}]],
+7:[[d= function abc(){}]],
+8:[c,d],
+9:c,
+10:d
+}</textarea>
+      </p>
+    </td>
+    <td valign="top" style="border:1px solid red;">
+      <pre id= "out"></pre>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

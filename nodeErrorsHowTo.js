@@ -26,6 +26,9 @@ function wrap (f) {
   };
 }
 
+var n= 1e3;
+(function f () { --n && f() })();
+
 process.on('uncaughtException', function ƒ (err) {
   var previous= err.previousStackTrace;
   var stack= err.stack.split("\n");

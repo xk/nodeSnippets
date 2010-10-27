@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>untitled</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Jorge">
+	<!-- Date: 2010-10-15 -->
+	<script>
+  function buscaPrimos (end) {
+    var primos= [2];
+    var t= +new Date();
+    
+    function print (start, post) {
+      document.body.appendChild(
+        document.createElement(
+          'span')).innerText= primos.slice(start).join(', ')+ post;
+    }
+
+    (function loop (n) {
+      var refresh= 1e5;
+      var start= primos.length;
+
+      do {
+        var i= 0;
+        var esPrimo= true;
+        var divisor= primos[i];
+        var sqrt= Math.sqrt(n);
+        
+        do {
+          if ( !(n % divisor) ) {
+            esPrimo= false;
+            break;
+          }
+          divisor= primos[++i];
+        } while (divisor <= sqrt);  
+        refresh--;
+
+        if (esPrimo) primos.push(n);
+        if (refresh < 0) {
+          print(start, ", ");
+          return setTimeout(function () { loop(++n) }, 0);
+        }
+        ++n;
+      } while (primos.length < end);
+      t= +new Date()- t;
+      print(start, " *** "+ end+ " : "+ t+ "ms");
+    })(2);
+  }
+
+  setTimeout(function(){buscaPrimos(1e6)}, 0);
+</script>
+</head>
+<body>
+2,</body>
+</html>
