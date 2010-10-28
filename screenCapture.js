@@ -5,44 +5,48 @@
   repeteadly captures the Mac screen via screencapture, and serves it as a stream of <img>s
 */
 
+var spawn= require('child_process').spawn;
 var exec= require('child_process').exec;
 var fs= require('fs');
 var MAX_INT= Math.pow(2,53);
-var html= process.mainModule.chunks.srcHTML;
-var kPeriodoDeCaducidad= 222;
+var html= getNamedChunks(arguments.callee.toString()).srcHTML;
+var kPeriodoDeCaducidad= 99;
 var fifo= process.ENV.TMPDIR+ "_____nOdEfIfO_"+ Date.now().toString(36)+ (MAX_INT * Math.random()).toString(36);
 exec('mkfifo '+ fifo, [], function (error, stdout, stderr) {
   if (error) throw error;
 });
 
+var quitting;
 var capturaEnCurso;
 var ultimaCaptura;
 var cbQueue= [];
 
 function capturarAhora () {
-  if (capturaEnCurso) return;
+  if (quitting || capturaEnCurso) return;
   capturaEnCurso= true;
-  exec('screencapture -CSx -t jpeg '+ fifo, [], function (error, stdout, stderr) {
-    if (error) throw error;
+  var sc= spawn('/usr/sbin/screencapture', ["-CSx", "-t", "jpeg", fifo]);
+  sc.on('exit', function () {
     fs.readFile(fifo, function (error, data) {
       if (error) throw error;
-      ultimaCaptura= data;
-      cbQueue.forEach(function (cb) {
-        cb(ultimaCaptura);
-      });
-      cbQueue= [];
+      
       if (capturarAhora.caducaTimer) clearTimeout(capturarAhora.caducaTimer);
       capturarAhora.caducaTimer= setTimeout(function () {
         capturaEnCurso= false;
         ultimaCaptura= null;
       }, kPeriodoDeCaducidad);
+      
+      ultimaCaptura= data;
+      cbQueue.forEach(function (cb) {
+        cb(ultimaCaptura);
+      });
+      cbQueue= [];
     });
   });
 }
 
 function dameUnaCaptura (cb) {
-  if (ultimaCaptura) cb(ultimaCaptura);
-  else cbQueue.push(cb);
+  if (ultimaCaptura) return cb(ultimaCaptura);
+  cbQueue.push(cb);
   capturarAhora();
 }
 
@@ -68,6 +72,11 @@ console.log('Server running at http://127.0.0.1:12345/');
 console.log(fifo);
 
 function exit () {
+  if (capturaEnCurso) {
+    quitting= true;
+    setTimeout(exit, 10);
+    return;
+  }
   if (!exit.flag) {
     exit.flag= 1;
     exec('rm '+ fifo, [], function (error, stdout, stderr) {
@@ -93,71 +102,56 @@ process.on('uncaughtException', exit);
   <meta name="author" content="Jorge@jorgechamorro.com">
   <!-- Date: 2010-10-26 -->
   <style type="text/css">
-  body { margin:0; padding:0; }
-  #control { position:fixed; top:0; left:0; right:0; background-color:rgba(0,1,0,0.5); padding-left:12px; padding-right:12px; }
-  #imgcontainer { padding:0;  padding-top: 21px; }
-  #slider { width:100%; }
-  img { width:100%; }
+    body { margin:0; padding:0; }
+    #imgcontainer { padding:0; }
+    img { width:100%; }
   </style>
   <script type="text/javascript">
-  window.onload= function () {
-    var MAX_INT= Math.pow(2,53);
-    var img= document.getElementById('img');
-    var kPeriodo= 500;
-    var buffer= [];
-    var t= +new Date();
-    img.onload= onLoad;
-    img.src="screencapture"+ noCache();
-    var kMaxBufferLength= 999;
-    var slider= document.getElementById('slider');
-    slider.onchange= onChange;
-    slider.max= kMaxBufferLength;
-    slider.value= kMaxBufferLength;
-    
-    function noCache () {
-      return "?t="+ (+new Date()).toString(36)+ (MAX_INT * Math.random()).toString(36);
-    }
-
-    function onChange () {
-      var current= document.getElementById('img');
-      var item= Math.floor(slider.value* (buffer.length- 1)/ slider.max);
-      current.parentNode.replaceChild(buffer[item], current);
-    }
-
-    function onLoad () {
-      var elapsedTime= +new Date()- t;
-      if (elapsedTime < kPeriodo) return setTimeout(onLoad, kPeriodo- onLoad+ 1);
+    window.onload= function () {
+      var MAX_INT= Math.pow(2,53);
+      var img= document.getElementById('img');
+      var t= +new Date();
+      var kPeriodo= 99;
+      img.onerror= reload;
+      (img.onload= function () {
+        var now= +new Date();
+        var next= kPeriodo- (now- t);
+        if (next < 0) next= 0;
+        setTimeout(reload, next);
+        t= now;
+      })();
       
-      if (buffer.push(img) > kMaxBufferLength) {
-        buffer= buffer.slice(-kMaxBufferLength);
+      function reload () {
+        img.src="screencapture"+ "?t="+ (+new Date()).toString(36)+ (MAX_INT * Math.random()).toString(36);
       }
-      
-      if (slider.value === slider.max) {
-        var current= document.getElementById('img');
-        current.parentNode.replaceChild(img, current);
-      }
-      
-      setTimeout(function () {
-        img= document.createElement('img');
-        img.id= 'img';
-        img.onload= onLoad;
-        img.onerror= function () {
-          img.src="screencapture"+ noCache();
-        };
-        img.src="screencapture"+ noCache();
-        t= +new Date();
-      }, 10);
-    }
-  };
+    };
   </script>
 </head>
 <body>
-  <div id="control">
-    <input id="slider" type="range" min="0" max="1" value="1">
-  </div>
   <div id="imgcontainer">
     <img id="img">
   </div>
 </body>
 </html>
 endchunk */
+
+function getNamedChunks (txt) {
+  var etiq;
+  var chunks= {};
+  txt= txt.split('\n');
+  txt.forEach(function (v,i,o) {
+    var r;
+    if (etiq) {
+      if ((/^endchunk[\s]{0,}\*\/$/i).test(v)) {
+        chunks[etiq]= chunks[etiq].join('\n');
+        etiq= '';
+      }
+      else chunks[etiq].push(v);
+    }
+    else if (r= v.match(/^\/\*[\s]{0,}beginchunk:[\s]{0,}([^\s]{1,})[\s]{0,}$/i)) {
+      etiq= r[1];
+      chunks[etiq]= [];
+    }
+  });
+  return chunks;
+}
