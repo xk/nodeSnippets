@@ -10,7 +10,7 @@ var exec= require('child_process').exec;
 var fs= require('fs');
 var MAX_INT= Math.pow(2,53);
 var html= getNamedChunks(arguments.callee.toString()).srcHTML;
-var kPeriodoDeCaducidad= 99;
+var kPeriodoDeCaducidad= 66;
 var fifo= process.ENV.TMPDIR+ "_____nOdEfIfO_"+ Date.now().toString(36)+ (MAX_INT * Math.random()).toString(36);
 exec('mkfifo '+ fifo, [], function (error, stdout, stderr) {
   if (error) throw error;
@@ -111,7 +111,7 @@ process.on('uncaughtException', exit);
       var MAX_INT= Math.pow(2,53);
       var img= document.getElementById('img');
       var t= +new Date();
-      var kPeriodo= 99;
+      var kPeriodo= 66;
       img.onerror= reload;
       (img.onload= function () {
         var now= +new Date();
