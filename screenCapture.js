@@ -10,9 +10,10 @@ var exec= require('child_process').exec;
 var fs= require('fs');
 var MAX_INT= Math.pow(2,53);
 var html= getNamedChunks(arguments.callee.toString()).srcHTML;
-var kPeriodoDeCaducidad= 66;
-var fifo= process.ENV.TMPDIR+ "_____nOdEfIfO_"+ Date.now().toString(36)+ (MAX_INT * Math.random()).toString(36);
-exec('mkfifo '+ fifo, [], function (error, stdout, stderr) {
+var kPeriodoDeCaducidad= 33;
+var fifo1= "/var/tmp/___nOdEfIfO_"+ Date.now().toString(36)+ (MAX_INT * Math.random()).toString(36);
+var fifo2= "/var/tmp/___nOdEfIfO_"+ Date.now().toString(36)+ (MAX_INT * Math.random()).toString(36);
+exec('mkfifo '+ fifo1+ " "+ fifo2, function (error, stdout, stderr) {
   if (error) throw error;
 });
 
@@ -20,22 +21,25 @@ var quitting;
 var capturaEnCurso;
 var ultimaCaptura;
 var cbQueue= [];
+var maxSize= 0;
+var minSize= 1e9;
 
 function capturarAhora () {
   if (quitting || capturaEnCurso) return;
   capturaEnCurso= true;
-  var sc= spawn('/usr/sbin/screencapture', ["-CSx", "-t", "jpeg", fifo]);
-  sc.on('exit', function () {
-    fs.readFile(fifo, function (error, data) {
+  
+  var scrn= exec('screencapture -CSx -t jpg '+ fifo1, function dsp (e,o,i) {
+    var imck= exec("convert -quality 20 jpg:"+ fifo1+ "'[80%]' jpg:"+ fifo2, function dsp (e,o,i) { });
+    fs.readFile(fifo2, function (error, data) {
       if (error) throw error;
-      
       if (capturarAhora.caducaTimer) clearTimeout(capturarAhora.caducaTimer);
       capturarAhora.caducaTimer= setTimeout(function () {
         capturaEnCurso= false;
         ultimaCaptura= null;
       }, kPeriodoDeCaducidad);
-      
       ultimaCaptura= data;
+      if (data.length > maxSize) console.log('MaxSize -> '+ (maxSize= data.length));
+      if (data.length < minSize) console.log('MinSize -> '+ (minSize= data.length));
       cbQueue.forEach(function (cb) {
         cb(ultimaCaptura);
       });
@@ -56,7 +60,6 @@ require('http').createServer(function (req, res) {
     res.end('FAIL');
   }
   else if ((req.url.indexOf("screencapture") >= 0) || (req.url.indexOf("favicon") >= 0)) {
-    //console.log("image/jpeg");
     res.writeHead(200, {'Content-Type' : 'image/jpeg', 'Cache-Control' : 'no-cache'});
     dameUnaCaptura(function (imagen) {
       res.end(imagen);
@@ -69,7 +72,8 @@ require('http').createServer(function (req, res) {
 }).listen(12345);
 
 console.log('Server running at http://127.0.0.1:12345/');
-console.log(fifo);
+console.log(fifo1);
+console.log(fifo2);
 
 function exit () {
   if (capturaEnCurso) {
@@ -79,9 +83,11 @@ function exit () {
   }
   if (!exit.flag) {
     exit.flag= 1;
-    exec('rm '+ fifo, [], function (error, stdout, stderr) {
-      console.log('\nBYE');
-      process.exit(0);
+    exec('rm '+ fifo1, [], function (error, stdout, stderr) {
+      exec('rm '+ fifo2, [], function (error, stdout, stderr) {
+        console.log('\nBYE');
+        process.exit(0);
+      });
     });
   }
 }
@@ -104,14 +110,13 @@ process.on('uncaughtException', exit);
   <style type="text/css">
     body { margin:0; padding:0; }
     #imgcontainer { padding:0; }
-    img { width:100%; }
   </style>
   <script type="text/javascript">
     window.onload= function () {
       var MAX_INT= Math.pow(2,53);
       var img= document.getElementById('img');
       var t= +new Date();
-      var kPeriodo= 66;
+      var kPeriodo= 33;
       img.onerror= reload;
       (img.onload= function () {
         var now= +new Date();
