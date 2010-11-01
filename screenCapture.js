@@ -29,21 +29,26 @@ function capturarAhora () {
   capturaEnCurso= true;
   
   var scrn= exec('screencapture -CSx -t jpg '+ fifo1, function dsp (e,o,i) {
-    var imck= exec("convert -quality 20 jpg:"+ fifo1+ "'[80%]' jpg:"+ fifo2, function dsp (e,o,i) { });
-    fs.readFile(fifo2, function (error, data) {
-      if (error) throw error;
-      if (capturarAhora.caducaTimer) clearTimeout(capturarAhora.caducaTimer);
-      capturarAhora.caducaTimer= setTimeout(function () {
-        capturaEnCurso= false;
-        ultimaCaptura= null;
-      }, kPeriodoDeCaducidad);
-      ultimaCaptura= data;
-      if (data.length > maxSize) console.log('MaxSize -> '+ (maxSize= data.length));
-      if (data.length < minSize) console.log('MinSize -> '+ (minSize= data.length));
-      cbQueue.forEach(function (cb) {
-        cb(ultimaCaptura);
-      });
-      cbQueue= [];
+    if (e) throw e;
+    var imck= exec("convertt -quality 70 jpg:"+ fifo1+ "'[55%]' jpg:"+ fifo2, function dsp (e,o,i) {
+      dispatchQueue( e ? fifo1 : fifo2 );
+      function dispatchQueue (srcFile) {
+        fs.readFile(srcFile, function (e, data) {
+          if (e) throw e;
+          if (capturarAhora.caducaTimer) clearTimeout(capturarAhora.caducaTimer);
+          capturarAhora.caducaTimer= setTimeout(function () {
+            capturaEnCurso= false;
+            ultimaCaptura= null;
+          }, kPeriodoDeCaducidad);
+          ultimaCaptura= data;
+          if (data.length > maxSize) console.log('MaxSize -> '+ (maxSize= data.length));
+          if (data.length < minSize) console.log('MinSize -> '+ (minSize= data.length));
+          cbQueue.forEach(function (cb) {
+            cb(ultimaCaptura);
+          });
+          cbQueue= [];
+        });
+      }
     });
   });
 }

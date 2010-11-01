@@ -1,0 +1,163 @@
+// !$*UTF8*$!
+{
+	08FB7793FE84155DC02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = CF0E5C3C127EE58B00EF0069 /* juanRegExp */;
+		activeTarget = 8DD76F620486A84900D96B5E /* juanRegExp */;
+		codeSenseManager = CF0E5C48127EE59500EF0069 /* Code sense */;
+		executables = (
+			CF0E5C3C127EE58B00EF0069 /* juanRegExp */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					528,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 310307105;
+			PBXWorkspaceStateSaveDate = 310307105;
+		};
+		perUserProjectItems = {
+			CF0E5C4B127EE5B900EF0069 /* PBXTextBookmark */ = CF0E5C4B127EE5B900EF0069 /* PBXTextBookmark */;
+			CF85220F127EECE900C1E96C /* PBXTextBookmark */ = CF85220F127EECE900C1E96C /* PBXTextBookmark */;
+			CF852210127EECE900C1E96C /* PBXTextBookmark */ = CF852210127EECE900C1E96C /* PBXTextBookmark */;
+			CF852212127EECE900C1E96C /* PBXTextBookmark */ = CF852212127EECE900C1E96C /* PBXTextBookmark */;
+		};
+		sourceControlManager = CF0E5C47127EE59500EF0069 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	08FB7796FE84155DC02AAC07 /* main.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {706, 864}}";
+			sepNavSelRange = "{1231, 0}";
+			sepNavVisRange = "{867, 468}";
+		};
+	};
+	8DD76F620486A84900D96B5E /* juanRegExp */ = {
+		activeExec = 0;
+		executables = (
+			CF0E5C3C127EE58B00EF0069 /* juanRegExp */,
+		);
+	};
+	CF0E5C3C127EE58B00EF0069 /* juanRegExp */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = juanRegExp;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	CF0E5C47127EE59500EF0069 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	CF0E5C48127EE59500EF0069 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	CF0E5C4B127EE5B900EF0069 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = CF0E5C4C127EE5B900EF0069 /* regexpsimple.cpp */;
+		name = "regexpsimple.cpp: 1";
+		rLen = 1348;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 505;
+		vrLoc = 0;
+	};
+	CF0E5C4C127EE5B900EF0069 /* regexpsimple.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = regexpsimple.cpp;
+		path = "/Users/jorge/Library/Mail Downloads/regexpsimple.cpp";
+		sourceTree = "<absolute>";
+	};
+	CF85220F127EECE900C1E96C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 08FB7796FE84155DC02AAC07 /* main.cpp */;
+		name = "main.cpp: 48";
+		rLen = 0;
+		rLoc = 1231;
+		rType = 0;
+		vrLen = 468;
+		vrLoc = 867;
+	};
+	CF852210127EECE900C1E96C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = CF852211127EECE900C1E96C /* regexpsimple.cpp */;
+		rLen = 0;
+		rLoc = 9223372036854775807;
+		rType = 0;
+	};
+	CF852211127EECE900C1E96C /* regexpsimple.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = regexpsimple.cpp;
+		path = "/var/folders/+A/+Atg2INUGw4BX1NCXMla8U+++TY/-Tmp-/com.apple.mail/compose/attach-T0x10051fe40.tmp.QJPxs6/regexpsimple.cpp";
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {706, 880}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{881, 467}";
+		};
+	};
+	CF852212127EECE900C1E96C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = CF852213127EECE900C1E96C /* regexpsimple.cpp */;
+		name = "regexpsimple.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 467;
+		vrLoc = 881;
+	};
+	CF852213127EECE900C1E96C /* regexpsimple.cpp */ = {
+		isa = PBXFileReference;
+		name = regexpsimple.cpp;
+		path = "/var/folders/+A/+Atg2INUGw4BX1NCXMla8U+++TY/-Tmp-/com.apple.mail/compose/attach-T0x10051fe40.tmp.QJPxs6/regexpsimple.cpp";
+		sourceTree = "<absolute>";
+	};
+}

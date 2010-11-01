@@ -1,0 +1,59 @@
+TjuanRegExp
+v7
+r0
+t310306436.945173
+cCheck dependencies
+cCompileC build/juanRegExp.build/Debug/juanRegExp.build/Objects-normal/x86_64/main.o /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/main.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+cLd /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/Debug/juanRegExp normal x86_64
+
+N/Developer/SDKs/MacOSX10.6.sdk
+c000000004CB9A2D200000000000000EE
+t1287234258
+s238
+
+N/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/Debug/juanRegExp
+t1288613635
+s11344
+
+N/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/juanRegExp.build/Debug/juanRegExp.build/Objects-normal/x86_64/juanRegExp.LinkFileList
+c000000004CCEAE330000000000000082
+t1288613427
+s130
+
+N/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/juanRegExp.build/Debug/juanRegExp.build/Objects-normal/x86_64/main.o
+t1288613634
+s69432
+
+N/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/main.cpp
+c000000004CCEAF010000000000000539
+t1288613633
+s1337
+i<iostream>
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies310306436#310306436#0(0"0(0#1#0"8695991680#0"0#
+
+CCompileC build/juanRegExp.build/Debug/juanRegExp.build/Objects-normal/x86_64/main.o /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/main.cpp normal x86_64 c++ com.apple.compilers.gcc.4_2
+s310306435.944100
+e310306435.945265
+r1
+xCompileC
+xbuild/juanRegExp.build/Debug/juanRegExp.build/Objects-normal/x86_64/main.o
+x/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/main.cpp
+xnormal
+xx86_64
+xc++
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@71"Compile /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/main.cpp310306435#310306435#0(0"0(0#0#63"/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/main.cpp8697101504#1521"    cd /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c++ -arch x86_64 -fmessage-length=0 -pipe -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -fvisibility-inlines-hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/juanRegExp.build/Debug/juanRegExp.build/juanRegExp-generated-files.hmap -I/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/juanRegExp.build/Debug/juanRegExp.build/juanRegExp-own-target-headers.hmap -I/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/juanRegExp.build/Debug/juanRegExp.build/juanRegExp-all-target-headers.hmap -iquote /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/juanRegExp.build/Debug/juanRegExp.build/juanRegExp-project-headers.hmap -F/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/Debug -I/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/Debug/include -I/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/juanRegExp.build/Debug/juanRegExp.build/DerivedSources/x86_64 -I/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/juanRegExp.build/Debug/juanRegExp.build/DerivedSources -c /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/main.cpp -o /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/juanRegExp.build/Debug/juanRegExp.build/Objects-normal/x86_64/main.o0#
+
+CLd /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/Debug/juanRegExp normal x86_64
+s310306435.945353
+e310306435.990988
+r1
+xLd
+x/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/Debug/juanRegExp
+xnormal
+xx86_64
+lSLF07#2@82"Link /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/Debug/juanRegExp310306435#310306435#0(0"0(0#0#0"8695915168#590"    cd /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/g++-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/Debug -F/Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/Debug -filelist /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/juanRegExp.build/Debug/juanRegExp.build/Objects-normal/x86_64/juanRegExp.LinkFileList -mmacosx-version-min=10.6 -o /Users/jorge/JAVASCRIPT/nodeSnippets/RegExp/juanRegExp/build/Debug/juanRegExp0#
+
