@@ -7,7 +7,7 @@ function match (regexp, txt) {
   if (regexp[0] === '^') return matchhere(regexpPtr+1, txtPtr);
   do {  /* must look even if string is empty */
     if (matchhere(regexpPtr, txtPtr)) return 1;
-  } while (txt[++txtPtr]);
+  } while (txt[txtPtr++]);
   return 0;
 
   /* matchhere: search for regexp at beginning of text */
@@ -23,7 +23,7 @@ function match (regexp, txt) {
   function matchstar (c, regexpPtr, txtPtr) {
     do {  /* a * matches zero or more instances */
       if (matchhere(regexpPtr, txtPtr)) return 1;
-    } while (txt[txtPtr] && (txt[++txtPtr] === c || c === '.'));
+    } while (txt[txtPtr] && (txt[txtPtr++] === c || c === '.'));
     return 0;
   }
 }
