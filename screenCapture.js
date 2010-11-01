@@ -104,14 +104,14 @@ function main () {
       var img= document.getElementById('img');
       var t= +new Date();
       var kPeriodo= 33;
-      img.onerror= reload;
-      (img.onload= function () {
+      img.onload= function () {
         var now= +new Date();
         var next= kPeriodo- (now- t);
         if (next < 0) next= 0;
         setTimeout(reload, next);
         t= now;
-      })();
+      };
+      (img.onerror= reload)();
       
       function reload () {
         img.src="screencapture"+ "?t="+ (+new Date()).toString(36)+ (MAX_INT * Math.random()).toString(36);
