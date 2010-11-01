@@ -30,9 +30,7 @@ function main () {
     capturando= true;
     exec('screencapture -CSx -t jpg '+ fifo1, function (e,o,i) {
       if (e) throw e;
-      exec("convert -quality 70 jpeg:"+ fifo1+ "'[55%]' jpeg:"+ fifo2, function (e,o,i) {
-        if (e) throw e;
-      });
+      exec("convert -quality 70 jpeg:"+ fifo1+ "'[55%]' jpeg:"+ fifo2, function (e,o,i) { if (e) throw e });
       fs.readFile(fifo2, function (e, data) {
         if (e) throw e;
         capturando= false;
@@ -54,9 +52,6 @@ function main () {
     cbQueue.push(cb);
     capturarAhora();
   }
-
-  var server= require('http').createServer(conexion);
-  server.listen(12345);
   
   function conexion (req, res) {
     if (req.method !== 'GET') {
@@ -74,7 +69,8 @@ function main () {
       res.end(html, 'utf8');
     }
   }
-
+  
+  require('http').createServer(conexion).listen(12345);
   console.log('Server running at http://127.0.0.1:12345/');
   console.log(fifo1);
   console.log(fifo2);
