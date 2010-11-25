@@ -10,7 +10,7 @@ function walk (file, cb) {
     fs.lstat(file, function (err, stat) {
       if (err) throw Error(err);
       if (stat.isDirectory()) {
-        getDirectory(file, function (files) {
+        getDirectory(function (files) {
           queue= files.concat(queue);
           next();
         });
@@ -26,7 +26,7 @@ function walk (file, cb) {
     }
   }
   
-  function getDirectory (file, cb) {
+  function getDirectory (cb) {
     fs.readdir(file, function(err, files) {
       if (err) throw Error(err);
       files.sort(function (a,b) {
