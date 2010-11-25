@@ -29,16 +29,18 @@ function walk (file, cb) {
   function getDirectory (cb) {
     fs.readdir(file, function(err, files) {
       if (err) throw Error(err);
-      files.sort(function (a,b) {
-        if (a > b) return 1;
-        if (a < b) return -1;
-        return 0;
-      });
+      files.sort(up);
       files.forEach(function (v,i,o) {
         o[i]= [file, '/', v].join('');
       });
       cb(files);
     });
+  }
+  
+  function up (a,b) {
+    if (a > b) return 1;
+    if (a < b) return -1;
+    return 0;
   }
 }
 
