@@ -67,11 +67,12 @@ function main () {
     else {
       res.writeHead(200, {'Content-Type': 'text/html', 'Cache-Control' : 'no-cache'});
       res.end(html, 'utf8');
+      console.log(req);
     }
   }
   
-  require('http').createServer(conexion).listen(12345);
-  console.log('Server running at http://127.0.0.1:12345/');
+  require('http').createServer(conexion).listen(8080);
+  console.log('Server running at http://127.0.0.1:8080/');
   console.log(fifo1);
   console.log(fifo2);
 
@@ -85,8 +86,7 @@ function main () {
 
 
 /* beginchunk: srcHTML
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
