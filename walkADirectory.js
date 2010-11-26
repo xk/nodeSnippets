@@ -24,7 +24,7 @@ function walk (file, cb) {
       var q= queue[queue.length-1];
       if (q.length) {
         file= q.pop();
-        return process.nextTick(walk2);
+        return walk2();
       } else {
         queue.length-= 1;
       }
@@ -43,8 +43,8 @@ function walk (file, cb) {
   }
   
   function up (a,b) {
-    a= a.toLowerCase();
-    b= b.toLowerCase();
+    //a= a.toLowerCase();
+    //b= b.toLowerCase();
     if (a > b) return -1;
     if (a < b) return  1;
     else       return  0;
