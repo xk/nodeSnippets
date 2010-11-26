@@ -24,12 +24,12 @@ function walk (file, cb) {
   function next () {
     if (q.length) {
       file= q.pop();
-      return walk2();
+      walk2();
     } else {
       queue.length-= 1;
       if (queue.length) {
         q= queue[queue.length-1];
-        return next();
+        next();
       }
     }
   }
