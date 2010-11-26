@@ -3,6 +3,7 @@
 function walk (file, cb) {
   var fs = require('fs');
   var queue= [];
+  var qPtr= 0;
   walk2();
   
   function walk2 () { 
@@ -11,7 +12,7 @@ function walk (file, cb) {
       if (err) throw Error(err);
       if (stat.isDirectory()) {
         getDirectory(function (files) {
-          queue= files.concat(queue);
+          queue.push(files);
           next();
         });
       }
@@ -20,9 +21,14 @@ function walk (file, cb) {
   }
   
   function next () {
-    if (queue.length) {
-      file= queue.shift();
-      process.nextTick(walk2);
+    while (queue.length) {
+      var q= queue[queue.length-1];
+      if (q.length) {
+        file= q.pop();
+        return process.nextTick(walk2);
+      } else {
+        queue.length-= 1;
+      }
     }
   }
   
@@ -38,8 +44,10 @@ function walk (file, cb) {
   }
   
   function up (a,b) {
-    if (a > b) return  1;
-    if (a < b) return -1;
+    a= a.toLowerCase();
+    b= b.toLowerCase();
+    if (a > b) return -1;
+    if (a < b) return  1;
     else       return  0;
   }
 }
