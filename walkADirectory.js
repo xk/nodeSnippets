@@ -2,7 +2,8 @@
 
 function walk (file, cb) {
   var fs = require('fs');
-  var queue= [];
+  var q= [];
+  var queue= [q];
   walk2();
   
   function walk2 () { 
@@ -11,7 +12,8 @@ function walk (file, cb) {
       if (err) throw Error(err);
       if (stat.isDirectory()) {
         getDirectory(function (files) {
-          queue.push(files);
+          q= files;
+          queue.push(q);
           next();
         });
       }
@@ -20,13 +22,14 @@ function walk (file, cb) {
   }
   
   function next () {
-    while (queue.length) {
-      var q= queue[queue.length-1];
-      if (q.length) {
-        file= q.pop();
-        return walk2();
-      } else {
-        queue.length-= 1;
+    if (q.length) {
+      file= q.pop();
+      return walk2();
+    } else {
+      queue.length-= 1;
+      if (queue.length) {
+        q= queue[queue.length-1];
+        return next();
       }
     }
   }
