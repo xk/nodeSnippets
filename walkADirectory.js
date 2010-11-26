@@ -43,8 +43,8 @@ function walk (file, cb) {
   }
   
   function up (a,b) {
-    //a= a.toLowerCase();
-    //b= b.toLowerCase();
+    a= a.toLowerCase();
+    b= b.toLowerCase();
     if (a > b) return -1;
     if (a < b) return  1;
     else       return  0;
