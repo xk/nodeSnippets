@@ -3,7 +3,6 @@
 function walk (file, cb) {
   var fs = require('fs');
   var queue= [];
-  var qPtr= 0;
   walk2();
   
   function walk2 () { 
