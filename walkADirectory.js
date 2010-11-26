@@ -9,7 +9,7 @@ function walk (file, cb) {
   function walk2 () { 
     cb(file);
     fs.lstat(file, function (err, stat) {
-      if (err) throw Error(err);
+      if (err) return next();
       if (stat.isDirectory()) {
         getDirectory(function (files) {
           q= files;
