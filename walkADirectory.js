@@ -9,15 +9,11 @@ function walk (file, cb) {
   function walk2 () { 
     cb(file);
     fs.lstat(file, function (err, stat) {
-      if (err) return next();
-      if (stat.isDirectory()) {
-        getDirectory(function (files) {
-          q= files;
-          queue.push(q);
-          next();
-        });
-      }
-      else next();
+      if (err || !stat.isDirectory()) return next();
+      getDirectory(function (files) {
+        queue.push(q= files);
+        next();
+      });
     });
   }
   
@@ -25,27 +21,27 @@ function walk (file, cb) {
     if (q.length) {
       file= q.pop();
       walk2();
-    } else {
-      queue.length-= 1;
-      if (queue.length) {
-        q= queue[queue.length-1];
-        next();
-      }
+    }
+    else if (queue.length-= 1) {
+      q= queue[queue.length-1];
+      next();
     }
   }
   
   function getDirectory (cb) {
     fs.readdir(file, function(err, files) {
       if (err) throw Error(err);
-      files.sort(up);
-      files.forEach(function (v,i,o) {
-        o[i]= [file, '/', v].join('');
-      });
+      files.sort(sort);
+      files.forEach(fullPath);
       cb(files);
     });
   }
   
-  function up (a,b) {
+  function fullPath (v,i,o) {
+    o[i]= [file, '/', v].join('');
+  }
+  
+  function sort (a,b) {
     a= a.toLowerCase();
     b= b.toLowerCase();
     if (a > b) return -1;
