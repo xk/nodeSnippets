@@ -12,7 +12,10 @@ var now= +new Date();
 
 function rnd (n) { return (n* Math.random()) >>> 0; }
 
-var words= "Con diez cañones por banda viento en popa a toda vela no corta el mar si no vuela un velero bergantín bajel pirata llamado por su bravura el temido en todo el mar conocido del uno al otro confín".toLowerCase().split(" ");
+var words= "Con diez cañones por banda viento en\
+ popa a toda vela no corta el mar si no vuela un\
+ velero bergantín bajel pirata llamado por su bravura\
+ el temido en todo el mar conocido del uno al otro confín".toLowerCase().split(" ");
 
 function poeta (length, r, curr, prev, l) {
   r= [];
