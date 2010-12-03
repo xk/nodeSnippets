@@ -13,7 +13,7 @@ var tester= (function () {
   
   function foo () {}
   
-  function display (t) {
+  function display (t, f) {
     var a, b;
     var t= ((t[0]/ t[1])- fooTime);
     if  (t<0) t= 0;
@@ -32,7 +32,7 @@ var tester= (function () {
       b= "ns";
     }
     
-    return [t, a, b];
+    return [t, a, b, f.name];
   }
 
   function tester (f, ms) {
@@ -43,10 +43,10 @@ var tester= (function () {
     if (!fooTime) {
       t= tester.calibrar();
       fooTime= 0;
-      console.log("FooTime -> "+ display(t));
+      console.log("FooTime -> "+ display(t, foo));
       fooTime= t[0]/t[1];
     }
-    console.log( display(calibrar(f)) );
+    console.log( display(calibrar(f), f) );
   }
   
   tester.calibrar= function () {
@@ -79,14 +79,11 @@ var tester= (function () {
 })();
 
 var i= 0;
-function a () { ++i; ++i; ++i; ++i; ++i; ++i; ++i; ++i; ++i; ++i; i= 0;
-  var n= 1e6;
-  while (n--) ;
-  }
-function b () { ++i; i= 0; }
+function a () { ++i; ++i; ++i; ++i; ++i; ++i; ++i; ++i; ++i; ++i; i= 0; }
+var list= [a];
 
 process.nextTick(function f () {
-  tester(a);
-  //tester(b);
+  tester(function x () {       a() });
+  tester(function y () { list[0]() });
   process.nextTick(f);
 });
