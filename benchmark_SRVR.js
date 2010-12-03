@@ -20,13 +20,16 @@ function poema (length, r, curr, prev, l) {
   return r.join(" ");
 }
 
+
+var res= new Buffer("HOLA");
+var headers= {Server: "NODE", "Content-Length": res.length};
 var port= 8081;
 require('http').createServer(callback).listen(port);
-var res= new Buffer("HOLA");
-var headers= {Server: "NODE", "Content-Length": res.length, "Connection": "close"};
+
 function callback (request, response) {
   response.writeHead(200, headers);
   response.end(res);
+  //response.end(poema(4096));
 }
 
 console.log("NODE Server running on port "+ port);

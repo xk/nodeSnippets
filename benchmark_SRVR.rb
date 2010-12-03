@@ -32,6 +32,7 @@ class RequestHandler < EM::P::HeaderAndContentProtocol
   
   def receive_request headers, content
     unPoema= "HOLA"
+    #unPoema= poema(4096)
     send_data("HTTP/1.1 200 OK\nContent-Length: #{unPoema.length}\nServer: RUBY\n\n#{unPoema}")
     close_connection_after_writing
   end
