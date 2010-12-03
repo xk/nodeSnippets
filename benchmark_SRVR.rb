@@ -5,10 +5,10 @@ require 'eventmachine'
 
 class RequestHandler < EM::P::HeaderAndContentProtocol
   
-  $words='Con diez cañones por banda viento en popa a toda vela
-  no corta el mar si no vuela un velero bergantín bajel
+  $words='Con diez canones por banda viento en popa a toda vela
+  no corta el mar si no vuela un velero bergantin bajel
   pirata llamado por su bravura el temido en todo el mar
-  conocido del uno al otro confín'.downcase.split
+  conocido del uno al otro confin'.downcase.split
 
   $words_length = $words.length
 
@@ -31,8 +31,8 @@ class RequestHandler < EM::P::HeaderAndContentProtocol
   end
   
   def receive_request headers, content
-    unPoema= poema(4096)
-    send_data("HTTP/1.1 200 OK\nContent-Length: #{unPoema.length}\nContent-Type: text/plain\nServer: RUBY\n\n#{unPoema}")
+    unPoema= "HOLA"
+    send_data("HTTP/1.1 200 OK\nContent-Length: #{unPoema.length}\nServer: RUBY\n\n#{unPoema}")
     close_connection_after_writing
   end
 end
