@@ -8,13 +8,13 @@ console.log= (function () {
   var saveData;
   
   function cb (err, written) {
-    var prefix= '';
+    var carry= '';
     if (err) {
       if (err.message.indexOf('EAGAIN') >= 0) written= 0;
       else throw err;
     }
-    if (written < saveData.length) prefix= saveData.substr(written);
-    if (prefix || buf.length) write(prefix+ buf.join('\n'));
+    if (written < saveData.length) carry= saveData.substr(written);
+    if (carry || buf.length) write(carry+ buf.join('\n'));
     else writeLock= 0;
     buf.length= 0;
   }
