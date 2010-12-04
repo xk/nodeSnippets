@@ -10,7 +10,7 @@ console.log= (function (txt) {
   function cb (err, written) {
     var prefix= '';
     if (err) {
-      if (err= require('constants').EAGAIN) written= 0;
+      if (err === require('constants').EAGAIN) written= 0;
       else throw Error(err);
     }
     if (written < saveData.length) prefix= saveData.substr(written);
