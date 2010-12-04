@@ -11,7 +11,7 @@ console.log= (function () {
     var prefix= '';
     if (err) {
       if (err.message.indexOf('EAGAIN') >= 0) written= 0;
-      else throw Error(err);
+      else throw err;
     }
     if (written < saveData.length) prefix= saveData.substr(written);
     if (prefix || buf.length) write(prefix+ buf.join('\n'));
