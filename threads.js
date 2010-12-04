@@ -1,6 +1,6 @@
 /* ************************************** ALT-console
 var console= {};
-console.log= (function (txt) {
+console.log= (function () {
   var fs= require('fs');
   var fd= process.stdout.fd;
   var buf= [];
