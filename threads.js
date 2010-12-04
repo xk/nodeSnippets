@@ -1,4 +1,4 @@
-/* ************************************** ALT-console
+//* ************************************** ALT-console
 var console= {};
 console.log= (function () {
   var fs= require('fs');
@@ -10,7 +10,7 @@ console.log= (function () {
   function cb (err, written) {
     var prefix= '';
     if (err) {
-      if (err === require('constants').EAGAIN) written= 0;
+      if (err.message.indexOf('EAGAIN') >= 0) written= 0;
       else throw Error(err);
     }
     if (written < saveData.length) prefix= saveData.substr(written);
@@ -33,10 +33,11 @@ console.log= (function () {
     saveData= txt;
     fs.write(fd, txt, -1, "utf8", cb);
   }
+  
   return writer;
 })();
 
-// *********************************************/
+//*********************************************/
 
 var kLoop= 2;
 function next (ƒ) { process.nextTick(ƒ) }
