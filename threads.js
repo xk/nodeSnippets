@@ -64,7 +64,7 @@ function dspSpeed () {
 (function fiber (n) {
   (function loop () {
     if (QUIT) return;
-    console.log([n, ' -> ', i++, " -> ", dspSpeed()].join(''));
+    console.log(["fiber#",n, ' -> ', i++, " -> ", dspSpeed()].join(''));
     next(loop);
   })();
 })(1);

@@ -1,5 +1,5 @@
 var ctr= 0;
-var t0= Date.now()+ 5;
+var t0= Date.now()+ 1;
 while (t0 > Date.now()) ; //get in sync with clock
 
 (function dspCtr () {
