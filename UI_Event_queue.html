@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>UI Event Queue</title>
+  <meta name="generator" content="TextMate http://macromates.com/">
+  <meta name="author" content="Jorge">
+  <!-- Date: 2011-03-28 -->
+  <script>
+    window.onload= main;
+    function main () {
+      //Demo de la cola de eventos.
+      //el botón block bloquea el event loop durante 5s
+      //si mientras tanto se aprietan los otros botones
+      //los eventos se despacharán en el mismo orden en que
+      //se hicieron los clics.
+      
+      function gebid (id) {
+        return document.getElementById(id);
+      }
+      var block= gebid('block');
+      var one= gebid('one');
+      var two= gebid('two');
+      var three= gebid('three');
+      var log= gebid('log');
+      
+      block.onclick= function () {
+        var t0= Date.now()+ 5e3;
+        while (Date.now() < t0) ;
+      };
+      
+      one.onclick= two.onclick= three.onclick= logit;
+      
+      function logit (e) {
+        log.innerHTML+= e.target.innerHTML+ "<br>";
+      };
+    };
+  </script>
+</head>
+<body>
+  <button id="block">BLOCK</button>
+  <button id="one">ONE</button>
+  <button id="two">TWO</button>
+  <button id="three">THREE</button>
+  <p id="log"></p>
+</body>
+</html>
