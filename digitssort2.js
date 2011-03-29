@@ -8,6 +8,9 @@
 # contain the same digits in some order.
 */
 
+var t= Date.now()+2;
+while (t > Date.now()) ;
+
 function ordenar (x) {
   return x.toString().split('').sort(up).join('');
 }
@@ -25,4 +28,5 @@ do {
   done= (s === ordenar(2*x)) && (s === ordenar(3*x)) && (s === ordenar(4*x)) && (s === ordenar(5*x)) && (s === ordenar(6*x));
 } while (!done);
 
-console.log([x,2*x,3*x,4*x,5*x,6*x]);
+console.log([x,2*x,3*x,4*x,5*x,6*x,(Date.now()-t)+ "ms"]);
+

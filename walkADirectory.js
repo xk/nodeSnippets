@@ -1,4 +1,5 @@
-// 2011-11-25 jorge@jorgechamorro.com
+// 2010-11-25 jorge@jorgechamorro.com
+// Uses 2 threads
 
 function walk (file, cb) {
   var fs = require('fs');
@@ -9,7 +10,7 @@ function walk (file, cb) {
   function walk2 () { 
     cb(file);
     fs.lstat(file, function (err, stat) {
-      if (err || !stat.isDirectory()) return next();
+      if (!stat.isDirectory() || err) return next();
       getDirectory(function (files) {
         queue.push(q= files);
         next();
@@ -44,9 +45,7 @@ function walk (file, cb) {
   function sort (a,b) {
     a= a.toLowerCase();
     b= b.toLowerCase();
-    if (a > b) return -1;
-    if (a < b) return  1;
-    else       return  0;
+    return (a > b) ? -1 : (a < b) ? 1 : 0;
   }
 }
 

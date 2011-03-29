@@ -17,10 +17,9 @@ function up (a,b) {
 }
 
 var x = 0;
-var s;
 do {
   x+= 1;
-  s= ordenar(x);
+  var s= ordenar(x);
 } while ((s !== ordenar(2*x)) || (s !== ordenar(3*x)) || (s !== ordenar(4*x)) || (s !== ordenar(5*x)) || (s !== ordenar(6*x)));
 
 console.log([x,2*x,3*x,4*x,5*x,6*x]);
