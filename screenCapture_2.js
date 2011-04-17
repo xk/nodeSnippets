@@ -2,20 +2,24 @@
 
 /*
   20110329 jorge@jorgechamorro.com
-  repeteadly captures the Mac screen via screencapture, and serves it as a stream of <img>s
+  captures the Mac screen via screencapture, and serves it as an <img>
 */
 
 var fs= require('fs');
-var fileName= process.env.TMPDIR+ "_";
+var path= process.env.TMPDIR;
 var spawn= require('child_process').spawn;
 var html= getNamedChunks(arguments.callee.toString()).srcHTML;
 
 main();
 
 function main () {
-
+  
+  var proc;
+  var ctr= 0;
+  var fileName;
+  var queue= [];
+  
   function conexion (req, res) {
-    process.stdout.write('.');
     
     res.statusCode = 200;
     res.setHeader("Cache-Control", "no-cache");
@@ -27,20 +31,38 @@ function main () {
     else if ((req.url.indexOf("screencapture") >= 0) || (req.url.indexOf("favicon") >= 0)) {
       res.setHeader("Content-Type", "image/jpeg");
       res.setHeader("Cache-Control", "no-cache");
-      var proc= spawn('screencapture', ['-Cx', '-t', 'jpg', fileName]);
-      proc.on('exit', function () {
-        var stream= fs.createReadStream(fileName, {bufferSize: 4* 1024* 1024});
-        stream.pipe(res);
-      });
+      
+      queue.push(res);
+      
+      if (proc) {
+        return;
+      }
+      
+      fileName= path+ "_"+ (ctr++);
+      proc= spawn('screencapture', ['-Cx', '-t', 'jpg', fileName]);
+      proc.on('exit', dump);
+      
+      function dump () {
+        queue.forEach(send);
+        proc= null;
+        fileName= '';
+        queue.length= 0;
+      }
+      
+      function send (res) {
+        fs.createReadStream(fileName).pipe(res);
+      }
     }
     else {
       res.setHeader("Content-Type", "text/html");
       res.end(html, 'utf8');
     }
+    
+
   }
   
-  require('http').createServer(conexion).listen(12345);
-  console.log('Server running at http://127.0.0.1:12345/');
+  require('http').createServer(conexion).listen(12346);
+  console.log('Server running at http://127.0.0.1:12346/');
 }
 
 
@@ -65,7 +87,7 @@ function main () {
       var img= document.getElementById('img');
       
       (img.onload= function onload () {
-        setTimeout(reload, 500);
+        setTimeout(reload, 0);
       })();
       
       img.onerror= function onerror () {
