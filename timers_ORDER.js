@@ -8,7 +8,7 @@ To demostrate that node.js is the only JS platform that fires timers in an unpre
 var ctr= 0;
 var RUN= 1;
 var kMax= 1024;
-var isaBrowser= !!(function(){return this})().window;
+var isaBrowser= !!(function(){return this}().window);
 
 function run () {
   for (var ms=0; ms<kMax; ms++) setTimeout(f(ms),ms);
