@@ -3,6 +3,7 @@
 /*
   20110329 jorge@jorgechamorro.com
   captures the Mac screen via screencapture, and serves it as an <img>
+  version 2
 */
 
 var fs= require('fs');
